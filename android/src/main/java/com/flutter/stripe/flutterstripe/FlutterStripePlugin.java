@@ -29,6 +29,8 @@ public class FlutterStripePlugin implements FlutterPlugin, MethodCallHandler {
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding b) {
+	  final MethodChannel channel = new MethodChannel(b.getBinaryMessenger(), "flutter_stripe");
+	  channel.setMethodCallHandler(this);
     binding = b;
   }
 
