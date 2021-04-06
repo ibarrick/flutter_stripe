@@ -17,12 +17,14 @@
       NSString* key = call.arguments[@"publishableKey"];
       STPAPIClient* client = [[STPAPIClient alloc] initWithPublishableKey:key];
       STPCardParams* cardParams = [STPCardParams alloc];
+      [cardParams init];
       cardParams.number = call.arguments[@"cardNumber"];
       NSNumber* year = call.arguments[@"expiryYear"];
       NSNumber* month = call.arguments[@"expiryMonth"];
       cardParams.expYear = [year intValue];
       cardParams.expMonth = [month intValue];
       cardParams.cvc = call.arguments[@"cvc"];
+      cardParams.name = @""; //Attempt to fix the fact that address is null
       STPCardValidationState state = [STPCardValidator validationStateForCard:cardParams];
       if (STPCardValidationStateInvalid == state) {
           result([FlutterError errorWithCode:@"invalidCardData" message:@"Invalid Card Data" details:nil]);
